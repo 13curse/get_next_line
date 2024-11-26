@@ -5,92 +5,62 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: sbehar <sbehar@student.42nice.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/26 10:19:25 by sbehar            #+#    #+#             */
-/*   Updated: 2024/11/26 11:11:45 by sbehar           ###   ########.fr       */
+/*   Created: 2024/11/26 23:11:37 by sbehar            #+#    #+#             */
+/*   Updated: 2024/11/26 23:11:37 by sbehar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*read_and_store(int fd, char *buffer)
+static char	*read_until_newline(int fd, char buffer[BUFFER_SIZE + 1], char **saved)
 {
-	char	temp[BUFFER_SIZE + 1];
-	ssize_t	bytes_read;
+	int		bytes_read;
+	char	*newline_pos;
 
-	while ((bytes_read = read(fd, temp, BUFFER_SIZE)) > 0)
+	while (1)
 	{
-		temp[bytes_read] = '\0';
-		buffer = ft_strjoin(buffer, temp);
-		if (ft_strchr(temp, '\n'))
+		newline_pos = ft_strchr(*saved, '\n');
+		if (newline_pos != NULL)
 			break;
+		bytes_read = read(fd, buffer, BUFFER_SIZE);
+		if (bytes_read <= 0)
+			break;
+		buffer[bytes_read] = '\0';
+		*saved = ft_strjoin(*saved, buffer);
 	}
-	return (buffer);
+	return (newline_pos);
 }
 
-char	*extract_line(char **buffer)
+static char	*extract_line(char **saved_line)
 {
-	char	*line;
-	char	*newline_pos;
-	size_t	line_length;
-	char	*new_buffer;
+	char	**split_result;
+	char	*after;
 
-	newline_pos = ft_strchr(*buffer, '\n');
-	if (newline_pos)
+	split_result = ft_split(*saved_line, '\n');
+	after = split_result[0];
+
+	if (split_result[1] != NULL)
 	{
-		line_length = newline_pos - *buffer + 1;
-		line = ft_strndup(*buffer, line_length);
-		new_buffer = ft_strdup(newline_pos + 1);
-		free(*buffer);
-		*buffer = new_buffer;
+		free(*saved_line);
+		*saved_line = split_result[1];
 	}
 	else
 	{
-		line = ft_strdup(*buffer);
-		free(*buffer);
-		*buffer = NULL;
+		free(*saved_line);
+		*saved_line = NULL;
 	}
-	return (line);
+	free(split_result);
+	return (after);
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*buffer;
-	char		*line;
+	static char	*saved = NULL;
+	char	buffer[BUFFER_SIZE + 1];
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	buffer = read_and_store(fd, buffer);
-	if (!buffer || !*buffer)
-		return (NULL);
-	line = extract_line(&buffer);
-	if (line)
-	{
-		free(buffer);
-		buffer = NULL;
-	}
-	return (line);
+	if (read_until_newline(fd, buffer, &saved) == NULL && saved == NULL)
+		return NULL;
+	return (extract_line(&saved));
 }
-
-int	main()
-{
-	int fd;
-	char	*line;
-
-	fd = open("text.txt", O_RDONLY);
-	if (fd < 0)
-	{
-		printf("Erreur d'ouverture du fichier");
-		return (1);
-	}
-	line = get_next_line(fd);
-	if (line)
-	{
-		printf("Première ligne : %s\n", line);
-		free(line);
-	}
-	else
-		printf("Aucune ligne lue.\n");
-	close(fd);
-	return (0);
-}
-	
