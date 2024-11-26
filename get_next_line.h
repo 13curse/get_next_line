@@ -23,5 +23,10 @@
 # include <fcntl.h>
 
 char	*get_next_line(int fd);
+char    *ft_strjoin(char *s1, char *s2);
+char    *ft_strchr(const char *s, int c);
+char    **ft_split(char *s, char separator);
+size_t  ft_strlen(const char *s);
+char    *ft_strndup(const char *s1, size_t n);
 
 #endif
