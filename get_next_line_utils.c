@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: sbehar <sbehar@student.42nice.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/26 10:19:22 by sbehar            #+#    #+#             */
-/*   Updated: 2024/11/26 11:08:01 by sbehar           ###   ########.fr       */
+/*   Created: 2024/11/26 16:15:00 by sbehar            #+#    #+#             */
+/*   Updated: 2024/11/28 16:17:26 by sbehar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,30 +17,31 @@ size_t	ft_strlen(const char *str)
 	int	len;
 
 	len = 0;
-	if (str == NULL)
+	if (str == (void *)0)
 		return (0);
 	while (str[len] != '\0')
 		len++;
 	return (len);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
 	size_t	len1;
 	size_t	len2;
 	char	*s3;
 	char	*ptr;
+	char 	*s4;
 
+	s4 = s1;
 	if (!s1 && !s2)
 		return (NULL);
 	if (!s1)
 		return (ft_strdup(s2));
 	if (!s2)
-		return (ft_strdup(s1));
+		return (s1);
 	len1 = ft_strlen(s1);
 	len2 = ft_strlen(s2);
-	s3 = malloc(len1 + len2 + 1);
-	if (!s3)
+	if (!(s3 = malloc(len1 + len2 + 1)))
 		return (NULL);
 	ptr = s3;
 	while (*s1)
@@ -48,48 +49,26 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	while (*s2)
 		*ptr++ = *s2++;
 	*ptr = '\0';
+	free(s4);
 	return (s3);
 }
 
 char	*ft_strchr(const char *s, int c)
 {
-	unsigned char	uc;
-
-	uc = (unsigned int)c;
-	while (*s)
+	if (!s)
+		return (NULL);
+	while (*s != '\0')
 	{
-		if (*s == (char)uc)
+		if (*s == (char)c)
 			return ((char *)s);
 		s++;
 	}
-	if (uc == '\0')
+	if (c == '\0')
 		return ((char *)s);
-	return ((void *)0);
+	return (NULL);
 }
 
-char	*ft_strdup(const char *s)
-{
-	char	*dup;
-	size_t	len;
-	size_t	i;
-
-	len = 0;
-	while (s[len])
-		len++;
-	dup = (char *)malloc(sizeof(char) * (len + 1));
-	if (!dup)
-		return ((void *)0);
-	i = 0;
-	while (i < len)
-	{
-		dup[i] = s[i];
-		i++;
-	}
-	dup[i] = '\0';
-	return (dup);
-}
-
-char	*ft_strndup(const char *s, size_t n)
+char	*ft_strndup(char *s, size_t n)
 {
 	size_t	i;
 	char	*dup;
@@ -106,6 +85,31 @@ char	*ft_strndup(const char *s, size_t n)
 	dup[i] = '\0';
 	return (dup);
 }
+
+void	ft_split(char **s, char *saved)
+{
+	int i;
+	int j;
+	int	a;
+
+	i = 0;
+	j = 0;
+	while ((*s)[i] && (*s)[i] != '\n')
+		i++;
+	if ((*s)[i])
+		i++;
+	a = i;
+	while ((*s)[a])
+	{
+		saved[j] = (*s)[a];
+		a++;
+		j++;
+	}
+	saved[j]= '\0';
+	if ((*s)[i])
+		(*s)[i] = '\0';
+}
+
 
 
 

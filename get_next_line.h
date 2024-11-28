@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: sbehar <sbehar@student.42nice.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/26 10:19:28 by sbehar            #+#    #+#             */
-/*   Updated: 2024/11/26 10:49:58 by sbehar           ###   ########.fr       */
+/*   Created: 2024/11/26 16:14:40 by sbehar            #+#    #+#             */
+/*   Updated: 2024/11/28 16:14:24 by sbehar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,12 @@
 # include <stdio.h>
 # include <fcntl.h>
 
-size_t	ft_strlen(const char *str);
-char	*ft_strjoin(char const *s1, char const *s2);
-char	*ft_strchr(const char *s, int c);
-char	*ft_strdup(const char *s);
-char	*ft_strndup(const char *s, size_t n);
-char	*read_and_share(int fd, char *buffer);
-char	*extract_line(char **buffer);
 char	*get_next_line(int fd);
+char	*ft_strjoin(char *s1, char *s2);
+char	*ft_strchr(const char *s, int c);
+void	ft_split(char **s,char  *saved);
+size_t	ft_strlen(const char *s);
+char	*ft_strndup(char *s1, size_t n);
+char	*ft_strdup(char *s);
 
 #endif
