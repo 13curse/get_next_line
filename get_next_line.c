@@ -6,7 +6,7 @@
 /*   By: sbehar <sbehar@student.42nice.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 14:54:52 by sbehar            #+#    #+#             */
-/*   Updated: 2024/11/28 16:30:11 by sbehar           ###   ########.fr       */
+/*   Updated: 2024/11/30 18:55:52 by sbehar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,69 +34,77 @@ char	*ft_strdup(char *s)
 	return (dup);
 }
 
-// static char	*read_until_newline(int fd, char buffer[BUFFER_SIZE + 1], char **saved)
-// {
-// 	int		bytes_read;
-// 	char	*newline_pos;
-// 	char	*temp;
+void	ft_bzero(void *s, size_t n)
+{
+	unsigned char	*p;
 
-// 	while (1)
-// 	{
-// 		newline_pos = ft_strchr(*saved, '\n');
-// 		if (newline_pos != NULL)
-// 			break;
-// 		bytes_read = read(fd, buffer, BUFFER_SIZE);
-// 		if (bytes_read <= 0)
-// 			break;
-// 		buffer[bytes_read] = '\0';
-// 		temp = ft_strjoin(*saved, buffer);
-// 		if (!temp)
-// 			return (NULL);
-// 		free(*saved);
-// 		*saved = temp;
-// 	}
-// 	return (newline_pos);
-// }
+	p = s;
+	while (n > 0)
+	{
+		*p = 0;
+		p++;
+		n--;
+	}
+}
 
-// static char	*extract_line(char **saved_line)
-// {
-// 	char	**split_result;
-// 	char	*after;
+static char	*read_and_join(int fd, char *buffer)
+{
+	char		line[BUFFER_SIZE + 1];
+	ssize_t		status;
+	char		*temp;
 
-// 	split_result = ft_split(*saved_line, '\n');
-// 	if (!split_result)
-// 		return (NULL);
-// 	after = split_result[0];
-// 	// free(*saved_line);
-// 	*saved_line = split_result[1];
-// 	free(split_result);
-// 	return (after);
-// }
+	if (!buffer)
+		buffer = ft_strdup("");
+	while (1)
+	{
+		ft_bzero(line, BUFFER_SIZE + 1);
+		status = read(fd, line, BUFFER_SIZE);
+		if (status < 0)
+		{
+			free(buffer);
+			return (NULL);
+		}
+		if (status == 0)
+			break ;
+		temp = ft_strjoin(buffer, line);
+		//free(buffer);
+		buffer = temp;
+		//if (!buffer)
+		//return (NULL);
+		if (ft_strchr(buffer, '\n'))
+			break ;
+	}
+	return (buffer);
+}
 
 char	*get_next_line(int fd)
 {
 	static char	saved[BUFFER_SIZE + 1];
-	char	*buffer;
-	int status ;
-	char	line[BUFFER_SIZE + 1];
+	char		*buffer;
+	//int			status;
+	//char		line[BUFFER_SIZE + 1];
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || !(buffer = ft_strdup(saved)))
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	// buffer = ft_strdup(saved);
-	saved[0] = '\0';
-	while (!ft_strchr(buffer, '\n'))
+	buffer = ft_strdup(saved);
+	ft_bzero(saved, BUFFER_SIZE + 1);
+	//saved[0] = '\0';
+	/*while (!ft_strchr(buffer, '\n'))
 	{
 		status = read(fd, line, BUFFER_SIZE);
 		if (status < 0)
 		{
 			free(buffer);
-			return(NULL);
+			return (NULL);
 		}
 		if (status == 0)
-			break;
+			break ;
 		line[status] = '\0';
 		buffer = ft_strjoin(buffer, line);
-	}
+	}*/
+	buffer = read_and_join(fd, buffer);
+	if (!buffer)
+		return (NULL);
 	ft_split(&buffer, saved);
 	if (ft_strlen(buffer) == 0)
 	{

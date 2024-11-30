@@ -6,7 +6,7 @@
 /*   By: sbehar <sbehar@student.42nice.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 16:15:00 by sbehar            #+#    #+#             */
-/*   Updated: 2024/11/28 16:17:26 by sbehar           ###   ########.fr       */
+/*   Updated: 2024/11/30 18:25:59 by sbehar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,9 @@ size_t	ft_strlen(const char *str)
 
 char	*ft_strjoin(char *s1, char *s2)
 {
-	size_t	len1;
-	size_t	len2;
 	char	*s3;
 	char	*ptr;
-	char 	*s4;
+	char	*s4;
 
 	s4 = s1;
 	if (!s1 && !s2)
@@ -39,9 +37,8 @@ char	*ft_strjoin(char *s1, char *s2)
 		return (ft_strdup(s2));
 	if (!s2)
 		return (s1);
-	len1 = ft_strlen(s1);
-	len2 = ft_strlen(s2);
-	if (!(s3 = malloc(len1 + len2 + 1)))
+	s3 = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	if (!s3)
 		return (NULL);
 	ptr = s3;
 	while (*s1)
@@ -88,8 +85,8 @@ char	*ft_strndup(char *s, size_t n)
 
 void	ft_split(char **s, char *saved)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 	int	a;
 
 	i = 0;
@@ -105,12 +102,7 @@ void	ft_split(char **s, char *saved)
 		a++;
 		j++;
 	}
-	saved[j]= '\0';
+	saved[j] = '\0';
 	if ((*s)[i])
 		(*s)[i] = '\0';
 }
-
-
-
-
-

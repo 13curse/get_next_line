@@ -6,7 +6,7 @@
 /*   By: sbehar <sbehar@student.42nice.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 16:14:40 by sbehar            #+#    #+#             */
-/*   Updated: 2024/11/28 16:14:24 by sbehar           ###   ########.fr       */
+/*   Updated: 2024/11/30 18:25:11 by sbehar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 char	*get_next_line(int fd);
 char	*ft_strjoin(char *s1, char *s2);
 char	*ft_strchr(const char *s, int c);
-void	ft_split(char **s,char  *saved);
+void	ft_split(char **s, char *saved);
 size_t	ft_strlen(const char *s);
 char	*ft_strndup(char *s1, size_t n);
 char	*ft_strdup(char *s);
