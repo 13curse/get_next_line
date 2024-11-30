@@ -6,7 +6,7 @@
 /*   By: sbehar <sbehar@student.42nice.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 14:54:52 by sbehar            #+#    #+#             */
-/*   Updated: 2024/11/30 18:55:52 by sbehar           ###   ########.fr       */
+/*   Updated: 2024/11/30 19:00:16 by sbehar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,7 @@ static char	*read_and_join(int fd, char *buffer)
 		if (status == 0)
 			break ;
 		temp = ft_strjoin(buffer, line);
-		//free(buffer);
 		buffer = temp;
-		//if (!buffer)
-		//return (NULL);
 		if (ft_strchr(buffer, '\n'))
 			break ;
 	}
@@ -81,27 +78,11 @@ char	*get_next_line(int fd)
 {
 	static char	saved[BUFFER_SIZE + 1];
 	char		*buffer;
-	//int			status;
-	//char		line[BUFFER_SIZE + 1];
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	buffer = ft_strdup(saved);
 	ft_bzero(saved, BUFFER_SIZE + 1);
-	//saved[0] = '\0';
-	/*while (!ft_strchr(buffer, '\n'))
-	{
-		status = read(fd, line, BUFFER_SIZE);
-		if (status < 0)
-		{
-			free(buffer);
-			return (NULL);
-		}
-		if (status == 0)
-			break ;
-		line[status] = '\0';
-		buffer = ft_strjoin(buffer, line);
-	}*/
 	buffer = read_and_join(fd, buffer);
 	if (!buffer)
 		return (NULL);
@@ -114,7 +95,7 @@ char	*get_next_line(int fd)
 	return (buffer);
 }
 
-int	main()
+/*int	main()
 {
 	int		fd;
 	char	*line;
@@ -132,4 +113,4 @@ int	main()
 	}
 	close(fd);
 	return (0);
-}
+}*/
