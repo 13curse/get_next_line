@@ -6,7 +6,7 @@
 /*   By: sbehar <sbehar@student.42nice.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 16:14:40 by sbehar            #+#    #+#             */
-/*   Updated: 2024/11/30 19:00:39 by sbehar           ###   ########.fr       */
+/*   Updated: 2024/12/02 14:07:59 by sbehar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define GET_NEXT_LINE_H
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 42
+#  define BUFFER_SIZE 2000000
 # endif
 
 # include <unistd.h>

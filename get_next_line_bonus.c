@@ -6,7 +6,7 @@
 /*   By: sbehar <sbehar@student.42nice.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 14:54:52 by sbehar            #+#    #+#             */
-/*   Updated: 2024/11/30 19:57:33 by sbehar           ###   ########.fr       */
+/*   Updated: 2024/12/02 14:14:15 by sbehar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ char	*get_next_line(int fd)
 	if (fd < 0 || fd >= MAX_FD || BUFFER_SIZE <= 0)
 		return (NULL);
 	buffer = ft_strdup(saved[fd]);
-	ft_bzero(saved, BUFFER_SIZE + 1);
+	ft_bzero(saved[fd], BUFFER_SIZE + 1);
 	buffer = read_and_join(fd, buffer);
 	if (!buffer)
 		return (NULL);
