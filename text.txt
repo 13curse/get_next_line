@@ -1,5 +1,12 @@
-aaaaaaaaaa
-Bonjour,
-Comment,
-Allez-vous,
-Aujourd'hui,
+aaaaaaaaaaaaaa,
+bbbbbbbbbbbbbb,
+ccccccccccccccc,
+ddddddddddddddddd,
+eeeeeeeeeeeeeeee,
+
+
+
+
+154545112,
+2222222222222222,
+((((((((((()))))))))))

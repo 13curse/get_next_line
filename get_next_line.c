@@ -6,7 +6,7 @@
 /*   By: sbehar <sbehar@student.42nice.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 14:54:52 by sbehar            #+#    #+#             */
-/*   Updated: 2024/12/02 14:14:11 by sbehar           ###   ########.fr       */
+/*   Updated: 2024/12/03 13:48:48 by sbehar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static char	*read_and_join(int fd, char *buffer)
 
 	if (!buffer)
 		buffer = ft_strdup("");
-	while (1)
+	while (!ft_strchr(buffer, '\n'))
 	{
 		ft_bzero(line, BUFFER_SIZE + 1);
 		status = read(fd, line, BUFFER_SIZE);
@@ -64,12 +64,11 @@ static char	*read_and_join(int fd, char *buffer)
 			free(buffer);
 			return (NULL);
 		}
+		line[status] = '\0';
 		if (status == 0)
 			break ;
 		temp = ft_strjoin(buffer, line);
 		buffer = temp;
-		if (ft_strchr(buffer, '\n'))
-			break ;
 	}
 	return (buffer);
 }
@@ -95,12 +94,12 @@ char	*get_next_line(int fd)
 	return (buffer);
 }
 
-/*int	main()
+/* int	main()
 {
 	int		fd;
 	char	*line;
 
-	fd = open("text.txt", O_RDONLY);
+	fd = open("main.c", O_RDONLY);
 	if (fd < 0)
 	{
 		printf("Erreur d'ouverture du fichier\n");
@@ -113,4 +112,4 @@ char	*get_next_line(int fd)
 	}
 	close(fd);
 	return (0);
-}*/
+} */

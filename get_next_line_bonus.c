@@ -6,7 +6,7 @@
 /*   By: sbehar <sbehar@student.42nice.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 14:54:52 by sbehar            #+#    #+#             */
-/*   Updated: 2024/12/02 14:14:15 by sbehar           ###   ########.fr       */
+/*   Updated: 2024/12/03 13:48:55 by sbehar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static char	*read_and_join(int fd, char *buffer)
 
 	if (!buffer)
 		buffer = ft_strdup("");
-	while (1)
+	while (!ft_strchr(buffer, '\n'))
 	{
 		ft_bzero(line, BUFFER_SIZE + 1);
 		status = read(fd, line, BUFFER_SIZE);
@@ -64,12 +64,11 @@ static char	*read_and_join(int fd, char *buffer)
 			free(buffer);
 			return (NULL);
 		}
+		line[status] = '\0';
 		if (status == 0)
 			break ;
 		temp = ft_strjoin(buffer, line);
 		buffer = temp;
-		if (ft_strchr(buffer, '\n'))
-			break ;
 	}
 	return (buffer);
 }
@@ -95,22 +94,43 @@ char	*get_next_line(int fd)
 	return (buffer);
 }
 
-/*int	main()
+/* int	main()
 {
-	int		fd;
+	int		fd1;
+	int		fd2;
+	int		fd3;
 	char	*line;
 
-	fd = open("text.txt", O_RDONLY);
-	if (fd < 0)
+	fd1 = open("text1.txt", O_RDONLY);
+	fd2 = open("text2.txt", O_RDONLY);
+	fd3 = open("text3.txt", O_RDONLY);
+	if (fd1 < 0 || fd2 < 0 || fd3 < 0)
 	{
 		printf("Erreur d'ouverture du fichier\n");
 		return (1);
 	}
-	while ((line = get_next_line(fd)) != NULL)
-	{
-		printf("Ligne lue : %s",  line);
-		free(line);
-	}
-	close(fd);
+	printf("Lecture alternée des fichiers :\n");
+
+	line = get_next_line(fd1);
+	printf("fd1 (1er tour) : %s", line);
+	free(line);
+	line = get_next_line(fd2);
+	printf("fd2 (1er tour) : %s", line);
+	free(line);
+	line = get_next_line(fd3);
+	printf("fd3 (1er tour) : %s", line);
+	free(line);
+	line = get_next_line(fd1);
+	printf("fd1 (2eme tour) : %s", line);
+	free(line);
+	line = get_next_line(fd2);
+	printf("fd2 (2eme tour) : %s", line);
+	free(line);
+	line = get_next_line(fd3);
+	printf("fd3 (2eme tour) : %s", line);
+	free(line);
+	close(fd1);
+	close(fd2);
+	close(fd3);
 	return (0);
-}*/
+} */

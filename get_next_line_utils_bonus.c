@@ -6,7 +6,7 @@
 /*   By: sbehar <sbehar@student.42nice.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 16:15:00 by sbehar            #+#    #+#             */
-/*   Updated: 2024/11/30 19:35:28 by sbehar           ###   ########.fr       */
+/*   Updated: 2024/12/03 13:39:48 by sbehar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,44 +65,25 @@ char	*ft_strchr(const char *s, int c)
 	return (NULL);
 }
 
-char	*ft_strndup(char *s, size_t n)
-{
-	size_t	i;
-	char	*dup;
-
-	i = 0;
-	dup = (char *)malloc(n + 1);
-	if (!dup)
-		return (NULL);
-	while (i < n && s[i] != '\0')
-	{
-		dup[i] = s[i];
-		i++;
-	}
-	dup[i] = '\0';
-	return (dup);
-}
-
 void	ft_split(char **s, char *saved)
 {
 	int	i;
 	int	j;
-	int	a;
 
 	i = 0;
 	j = 0;
 	while ((*s)[i] && (*s)[i] != '\n')
 		i++;
-	if ((*s)[i])
-		i++;
-	a = i;
-	while ((*s)[a])
+	if ((*s)[i] == '\n')
 	{
-		saved[j] = (*s)[a];
-		a++;
-		j++;
+		i++;
+		while ((*s)[i] && j < BUFFER_SIZE - 1)
+		{
+			saved[j++] = (*s)[i++];
+		}
+		(*s)[i - j] = '\0';
 	}
-	saved[j] = '\0';
-	if ((*s)[i])
+	else
 		(*s)[i] = '\0';
+	saved[j] = '\0';
 }

@@ -6,7 +6,7 @@
 /*   By: sbehar <sbehar@student.42nice.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 16:14:40 by sbehar            #+#    #+#             */
-/*   Updated: 2024/11/30 19:35:23 by sbehar           ###   ########.fr       */
+/*   Updated: 2024/12/03 13:39:34 by sbehar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ char	*ft_strjoin(char *s1, char *s2);
 char	*ft_strchr(const char *s, int c);
 void	ft_split(char **s, char *saved);
 size_t	ft_strlen(const char *s);
-char	*ft_strndup(char *s1, size_t n);
 char	*ft_strdup(char *s);
 void	ft_bzero(void *s, size_t n);
 
