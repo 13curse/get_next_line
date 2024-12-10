@@ -6,7 +6,7 @@
 /*   By: sbehar <sbehar@student.42nice.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 14:54:52 by sbehar            #+#    #+#             */
-/*   Updated: 2024/12/03 13:48:48 by sbehar           ###   ########.fr       */
+/*   Updated: 2024/12/05 11:03:17 by sbehar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,12 +94,12 @@ char	*get_next_line(int fd)
 	return (buffer);
 }
 
-/* int	main()
+int	main()
 {
 	int		fd;
 	char	*line;
 
-	fd = open("main.c", O_RDONLY);
+	fd = open("get_next_line.c", O_RDONLY);
 	if (fd < 0)
 	{
 		printf("Erreur d'ouverture du fichier\n");
@@ -112,4 +112,4 @@ char	*get_next_line(int fd)
 	}
 	close(fd);
 	return (0);
-} */
+}
